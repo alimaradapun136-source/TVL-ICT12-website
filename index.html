@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Media Gallery Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+        .upload-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            margin-top: 10px;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery-item {
+            background: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        img, video {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Picture & Video Gallery</h1>
+        <div class="upload-box">
+            <h3>Upload Picture or Video</h3>
+            <input type="file" id="mediaInput" accept="image/*,video/*" />
+            <button onclick="addMedia()">Add to Gallery</button>
+        </div>
+
+        <div class="gallery" id="gallery"></div>
+    </div>
+
+    <script>
+        function addMedia() {
+            const input = document.getElementById('mediaInput');
+            const file = input.files[0];
+            if (!file) return alert('Pumili muna ng picture o video.');
+
+            const gallery = document.getElementById('gallery');
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+
+            const url = URL.createObjectURL(file);
+
+            if (file.type.startsWith('image')) {
+                item.innerHTML = <img src="${url}" alt="Image">;
+            } else if (file.type.startsWith('video')) {
+                item.innerHTML = <video controls><source src="${url}"></video>;
+            }
+
+            gallery.appendChild(item);
+            input.value = '';
+        }
+    </script>
+</body>
+</html>
